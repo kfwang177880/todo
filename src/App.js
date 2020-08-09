@@ -1,65 +1,67 @@
 import React, {Component} from 'react'
+
 class TodoList extends Component {
-  constructor(){
+
+  constructor() {
     super();
     this.state = {
-      todos: [],
-      currentToDo:"",
+      todo: [],
+      currentTodo: "",
     };
   }
-  //This is where I'm going to code the handleChange method the methods go
+
   handleChange = event => {
     //console.log(event.target.value)
     this.setState({
-      currentToDo: event.target.value,
+      currentTodo:event.target.value
     })
-    console.log(this.state.currentToDo);
+    console.log(this.state.currentTodo)
   };
-//this is where I am going to code the addItem method
+
   addItem = event => {
     event.preventDefault();
-   // console.log("addItem Method fired")
-    if(this.state.currentToDo !==''){
+    if (this.state.currentTodo !== '') {
       this.setState({
-       currentToDo: "",
-       //ES6 Workshop-spread operator. Can also push it in
-       todos: [...this.state.todos, this.state.currentToDo]
+        currentTodo: "",
+      // E6 SPREAD Operator with ...
+        todo: [...this.state.todo, this.state.currentTodo]
       })
     }
+  //  console.log('addItem Method fired')
   };
+
   deleteItem = (idx) => {
     //console.log(idx)
-    const filteredItems = this.state.todos.filter((el, index) => {
+    const filteredItems = this.state.todo.filter((el, index) => {
       return index !== idx
     })
     //console.log(filteredItems)
     this.setState({
-      todos: filteredItems,
+      todo: filteredItems,
     })
-  }
+  }  
 
-  render(){
-    // console.log(this.state.todos)
-    // deconstruct todos from state
-    const {todos} = this.state
+  render() {
+    const {todo} = this.state
     return (
       <div className='container'>
-        <form onSubmit={this.addItem}>
-          <label htmlFor="tastName">Task Name:</label>
-          <input onChange={this.handleChange} name="taskName"type="text"placeholder="Add todo here!"/>
-          <button type="submit">Add Task</button>
+        <form onSubmit = {this.addItem}>
+          <label htmlFor='taskName'>Task Name:</label>
+          <input id="invalue" onChange={this.handleChange} name='taskName'type='text'placeholder='Add todo here!' />
+          <button type='submit'>Add Task</button>
         </form>
         <ul>
-          {todos.map((el,idx) => {
+          {todo.map((element,idx) => {
             return(
-              <li key={idx}>{el}
-                <button type="button" onClick={() => this.deleteItem(idx)} >Delete</button>
+              <li key={idx}>{element}
+                <button type="button" onClick={() => this.deleteItem(idx)}>Delete</button>
               </li>
             )
           })}
-        </ul>
+        </ul>        
       </div>
     );
   }
 }
+
 export default TodoList;
