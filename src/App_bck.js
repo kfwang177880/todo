@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import Tasklist from './Tasklist'
-import TodoForm from './TodoForm'
 
 class TodoList extends Component {
 
@@ -44,10 +42,23 @@ class TodoList extends Component {
   }  
 
   render() {
+    const {todo} = this.state
     return (
       <div className='container'>
-        <TodoForm handleChange={this.handleChange} addItem={this.addItem} currentTodo={this.state.currentTodo} />
-        <Tasklist todo={this.state.todo} deleteItem={this.deleteItem} />
+        <form onSubmit = {this.addItem}>
+          <label htmlFor='taskName'>Task Name:</label>
+          <input id="invalue" onChange={this.handleChange} name='taskName'type='text'placeholder='Add todo here!' />
+          <button type='submit'>Add Task</button>
+        </form>
+        <ul>
+          {todo.map((element,idx) => {
+            return(
+              <li key={idx}>{element}
+                <button type="button" onClick={() => this.deleteItem(idx)}>Delete</button>
+              </li>
+            )
+          })}
+        </ul>        
       </div>
     );
   }
